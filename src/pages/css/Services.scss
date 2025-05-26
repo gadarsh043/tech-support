@@ -1,109 +1,460 @@
 @use './variables.scss' as *;
 
-.services-page {
+.services {
+  // Add top padding to account for fixed navbar
+  padding-top: 60px;
   min-height: 100vh;
-  padding: $spacing-xl 1rem;
-  background: $gradient-light;
+  background: $background-light;
+
+  @include tablet-up {
+    padding-top: 70px;
+  }
 
   .container {
     max-width: 1280px;
     margin: 0 auto;
+    padding: $mobile-spacing-xl $mobile-spacing-md;
+
+    @include tablet-up {
+      padding: $spacing-xl $spacing-lg;
+    }
   }
 
-  .header {
+  .page-header {
     text-align: center;
-    margin-bottom: $spacing-xl;
+    margin-bottom: $mobile-spacing-xl;
+
+    @include tablet-up {
+      margin-bottom: $spacing-xl;
+    }
 
     h1 {
-      font-size: 2.5rem;
+      font-size: $mobile-font-size-3xl;
       font-weight: 700;
       color: $text-primary;
-      margin-bottom: $spacing-sm;
+      margin-bottom: $mobile-spacing-md;
+
+      @include tablet-up {
+        font-size: $font-size-4xl;
+        margin-bottom: $spacing-lg;
+      }
+
+      .highlight {
+        color: $primary-color;
+        position: relative;
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 3px;
+          background: $gradient-primary;
+          border-radius: $border-radius-full;
+        }
+      }
     }
 
     p {
-      font-size: 1.25rem;
+      font-size: $mobile-font-size-base;
       color: $text-secondary;
-      max-width: 42rem;
+      max-width: 600px;
       margin: 0 auto;
+      line-height: 1.6;
+
+      @include tablet-up {
+        font-size: $font-size-lg;
+      }
     }
   }
 
   .services-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: $spacing-lg;
+    gap: $mobile-spacing-lg;
 
-    @media (min-width: $breakpoint-md) {
+    @include tablet-up {
       grid-template-columns: repeat(2, 1fr);
+      gap: $spacing-lg;
     }
 
-    @media (min-width: $breakpoint-lg) {
+    @include desktop-up {
       grid-template-columns: repeat(3, 1fr);
+    }
+
+    .service-card {
+      background: $background-white;
+      border-radius: $border-radius-lg;
+      padding: $mobile-spacing-lg;
+      box-shadow: $shadow-sm;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      transition: all $transition-normal;
+      position: relative;
+      overflow: hidden;
+
+      @include tablet-up {
+        padding: $spacing-lg;
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: $gradient-primary;
+        transform: scaleX(0);
+        transition: transform $transition-normal;
+      }
+
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: $shadow-lg;
+        border-color: rgba($primary-color, 0.2);
+
+        &::before {
+          transform: scaleX(1);
+        }
+
+        .service-icon {
+          transform: scale(1.1);
+        }
+      }
+
+      .service-icon {
+        width: 60px;
+        height: 60px;
+        background: $gradient-primary;
+        border-radius: $border-radius-lg;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: $mobile-spacing-md;
+        color: white;
+        font-size: 28px;
+        transition: transform $transition-normal;
+
+        @include tablet-up {
+          width: 70px;
+          height: 70px;
+          font-size: 32px;
+          margin-bottom: $spacing-md;
+        }
+      }
+
+      .service-content {
+        h3 {
+          font-size: $mobile-font-size-xl;
+          font-weight: 600;
+          color: $text-primary;
+          margin-bottom: $mobile-spacing-sm;
+
+          @include tablet-up {
+            font-size: $font-size-2xl;
+            margin-bottom: $spacing-sm;
+          }
+        }
+
+        p {
+          font-size: $mobile-font-size-sm;
+          color: $text-secondary;
+          line-height: 1.6;
+          margin-bottom: $mobile-spacing-md;
+
+          @include tablet-up {
+            font-size: $font-size-base;
+            margin-bottom: $spacing-md;
+          }
+        }
+
+        .features {
+          list-style: none;
+          padding: 0;
+          margin: 0 0 $mobile-spacing-md 0;
+
+          @include tablet-up {
+            margin-bottom: $spacing-md;
+          }
+
+          li {
+            font-size: $mobile-font-size-sm;
+            color: $text-secondary;
+            margin-bottom: $mobile-spacing-xs;
+            padding-left: $mobile-spacing-md;
+            position: relative;
+
+            @include tablet-up {
+              font-size: $font-size-sm;
+              margin-bottom: $spacing-xs;
+              padding-left: $spacing-md;
+            }
+
+            &::before {
+              content: '✓';
+              position: absolute;
+              left: 0;
+              color: $primary-color;
+              font-weight: 600;
+            }
+          }
+        }
+
+        .price-section {
+          border-top: 1px solid rgba(0, 0, 0, 0.1);
+          padding-top: $mobile-spacing-md;
+          margin-top: $mobile-spacing-md;
+
+          @include tablet-up {
+            padding-top: $spacing-md;
+            margin-top: $spacing-md;
+          }
+
+          .price {
+            font-size: $mobile-font-size-2xl;
+            font-weight: 700;
+            color: $primary-color;
+            margin-bottom: $mobile-spacing-xs;
+
+            @include tablet-up {
+              font-size: $font-size-3xl;
+              margin-bottom: $spacing-xs;
+            }
+
+            .currency {
+              font-size: $mobile-font-size-lg;
+
+              @include tablet-up {
+                font-size: $font-size-xl;
+              }
+            }
+
+            .period {
+              font-size: $mobile-font-size-sm;
+              color: $text-light;
+              font-weight: 400;
+
+              @include tablet-up {
+                font-size: $font-size-base;
+              }
+            }
+          }
+
+          .price-note {
+            font-size: $mobile-font-size-xs;
+            color: $text-light;
+            margin-bottom: $mobile-spacing-md;
+
+            @include tablet-up {
+              font-size: $font-size-sm;
+              margin-bottom: $spacing-md;
+            }
+          }
+        }
+
+        .cta-button {
+          display: block;
+          width: 100%;
+          background: $gradient-primary;
+          color: white;
+          padding: $mobile-spacing-md;
+          border-radius: $border-radius-md;
+          text-decoration: none;
+          font-weight: 600;
+          font-size: $mobile-font-size-base;
+          text-align: center;
+          transition: all $transition-normal;
+          border: none;
+          cursor: pointer;
+
+          @include tablet-up {
+            padding: $spacing-sm $spacing-md;
+            font-size: $font-size-base;
+          }
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: $shadow-md;
+          }
+
+          &:active {
+            transform: translateY(0);
+          }
+        }
+      }
+
+      // Special styling for featured services
+      &.featured {
+        border: 2px solid $primary-color;
+        position: relative;
+
+        &::before {
+          transform: scaleX(1);
+        }
+
+        .featured-badge {
+          position: absolute;
+          top: $mobile-spacing-md;
+          right: $mobile-spacing-md;
+          background: $secondary-color;
+          color: white;
+          padding: $mobile-spacing-xs $mobile-spacing-sm;
+          border-radius: $border-radius-full;
+          font-size: $mobile-font-size-xs;
+          font-weight: 600;
+          text-transform: uppercase;
+
+          @include tablet-up {
+            top: $spacing-md;
+            right: $spacing-md;
+            padding: $spacing-xs $spacing-sm;
+            font-size: $font-size-xs;
+          }
+        }
+      }
     }
   }
 
-  .service-card {
-    background: $background-white;
+  // CTA Section
+  .services-cta {
+    background: $gradient-primary;
     border-radius: $border-radius-lg;
-    box-shadow: $shadow-lg;
-    overflow: hidden;
-    transition: transform $transition-normal;
+    padding: $mobile-spacing-xl;
+    text-align: center;
+    margin-top: $mobile-spacing-xl;
+    color: white;
 
-    &:hover {
-      transform: translateY(-4px);
+    @include tablet-up {
+      padding: $spacing-xl;
+      margin-top: $spacing-xl;
     }
 
-    .card-content {
-      padding: $spacing-lg;
-    }
+    h2 {
+      font-size: $mobile-font-size-2xl;
+      font-weight: 700;
+      margin-bottom: $mobile-spacing-md;
 
-    .icon-wrapper {
-      width: 4rem;
-      height: 4rem;
-      background: rgba($primary-color, 0.1);
-      border-radius: $border-radius-full;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: $spacing-md;
-      color: $primary-color;
-      transition: all $transition-normal;
-
-      svg {
-        width: 2rem;
-        height: 2rem;
+      @include tablet-up {
+        font-size: $font-size-3xl;
+        margin-bottom: $spacing-lg;
       }
     }
 
-    &:hover .icon-wrapper {
-      background: $primary-color;
-      color: $background-white;
-      transform: scale(1.1);
-    }
-
-    h3 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: $text-primary;
-      margin-bottom: $spacing-sm;
-    }
-
-    .description {
-      color: $text-secondary;
-      margin-bottom: $spacing-md;
+    p {
+      font-size: $mobile-font-size-base;
+      margin-bottom: $mobile-spacing-lg;
+      opacity: 0.9;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
       line-height: 1.6;
+
+      @include tablet-up {
+        font-size: $font-size-lg;
+        margin-bottom: $spacing-xl;
+      }
     }
 
-    .price {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: $primary-color;
-      display: inline-block;
-      padding: $spacing-xs $spacing-sm;
-      background: rgba($primary-color, 0.1);
-      border-radius: $border-radius-sm;
-      margin-bottom: $spacing-sm;
+    .cta-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: $mobile-spacing-md;
+      align-items: center;
+
+      @include tablet-up {
+        flex-direction: row;
+        justify-content: center;
+        gap: $spacing-lg;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: $mobile-spacing-md $mobile-spacing-lg;
+        border-radius: $border-radius-lg;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: $mobile-font-size-base;
+        transition: all $transition-normal;
+        min-width: 160px;
+        text-align: center;
+
+        @include tablet-up {
+          padding: $spacing-md $spacing-xl;
+          font-size: $font-size-lg;
+          min-width: 180px;
+        }
+
+        &.btn-primary {
+          background: white;
+          color: $primary-color;
+          box-shadow: $shadow-md;
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: $shadow-lg;
+          }
+        }
+
+        &.btn-secondary {
+          background: transparent;
+          color: white;
+          border: 2px solid white;
+
+          &:hover {
+            background: white;
+            color: $primary-color;
+          }
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+      }
+    }
+  }
+}
+
+// Touch device optimizations
+@media (hover: none) and (pointer: coarse) {
+  .services {
+    .service-card {
+      &:hover {
+        transform: none;
+        box-shadow: $shadow-sm;
+        border-color: rgba(0, 0, 0, 0.05);
+
+        &::before {
+          transform: scaleX(0);
+        }
+
+        .service-icon {
+          transform: none;
+        }
+      }
+
+      &:active {
+        transform: translateY(-2px);
+        box-shadow: $shadow-md;
+        border-color: rgba($primary-color, 0.2);
+
+        &::before {
+          transform: scaleX(1);
+        }
+      }
+    }
+
+    .cta-button,
+    .btn {
+      &:hover {
+        transform: none;
+        box-shadow: $shadow-sm;
+      }
+
+      &:active {
+        transform: translateY(-2px);
+        box-shadow: $shadow-md;
+      }
     }
   }
 } 

@@ -1,140 +1,567 @@
 @use './variables.scss' as *;
 
-.about-page {
+.about {
+  // Add top padding to account for fixed navbar
+  padding-top: 60px;
   min-height: 100vh;
-  padding: $spacing-xl 1rem;
-  background: $gradient-light;
+  background: $background-light;
+
+  @include tablet-up {
+    padding-top: 70px;
+  }
 
   .container {
     max-width: 1280px;
     margin: 0 auto;
+    padding: $mobile-spacing-xl $mobile-spacing-md;
+
+    @include tablet-up {
+      padding: $spacing-xl $spacing-lg;
+    }
   }
 
-  .header {
+  .page-header {
     text-align: center;
-    margin-bottom: $spacing-xl;
+    margin-bottom: $mobile-spacing-xl;
+
+    @include tablet-up {
+      margin-bottom: $spacing-xl;
+    }
 
     h1 {
-      font-size: 2.5rem;
+      font-size: $mobile-font-size-3xl;
       font-weight: 700;
       color: $text-primary;
-      margin-bottom: $spacing-sm;
-    }
+      margin-bottom: $mobile-spacing-md;
 
-    p {
-      font-size: 1.25rem;
-      color: $text-secondary;
-      max-width: 42rem;
-      margin: 0 auto;
-    }
-  }
+      @include tablet-up {
+        font-size: $font-size-4xl;
+        margin-bottom: $spacing-lg;
+      }
 
-  .team-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: $spacing-lg;
-    margin-bottom: $spacing-xl;
-
-    @media (min-width: $breakpoint-md) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  .team-card {
-    background: $background-white;
-    border-radius: $border-radius-lg;
-    box-shadow: $shadow-lg;
-    overflow: hidden;
-    transition: transform $transition-normal;
-
-    &:hover {
-      transform: translateY(-4px);
-    }
-
-    .card-content {
-      padding: $spacing-lg;
-    }
-
-    .profile-image {
-      width: 100%;
-      height: 300px;
-      object-fit: cover;
-    }
-
-    .role {
-      color: $primary-color;
-      font-size: 0.875rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: $spacing-xs;
-    }
-
-    h2 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: $text-primary;
-      margin-bottom: $spacing-sm;
-    }
-
-    .description {
-      color: $text-secondary;
-      margin-bottom: $spacing-md;
-    }
-
-    .skills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: $spacing-xs;
-      margin-bottom: $spacing-md;
-
-      .skill-tag {
-        background: rgba($primary-color, 0.1);
+      .highlight {
         color: $primary-color;
-        padding: 0.25rem 0.75rem;
-        border-radius: $border-radius-full;
-        font-size: 0.875rem;
-        font-weight: 500;
+        position: relative;
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 3px;
+          background: $gradient-primary;
+          border-radius: $border-radius-full;
+        }
       }
     }
 
-    .social-links {
-      display: flex;
-      gap: $spacing-sm;
+    p {
+      font-size: $mobile-font-size-base;
+      color: $text-secondary;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
 
-      a {
-        color: $text-light;
-        transition: color $transition-fast;
+      @include tablet-up {
+        font-size: $font-size-lg;
+      }
+    }
+  }
+
+  // Team Section
+  .team-section {
+    margin-bottom: $mobile-spacing-xl;
+
+    @include tablet-up {
+      margin-bottom: $spacing-xl;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: $mobile-font-size-2xl;
+      font-weight: 700;
+      color: $text-primary;
+      margin-bottom: $mobile-spacing-lg;
+
+      @include tablet-up {
+        font-size: $font-size-3xl;
+        margin-bottom: $spacing-xl;
+      }
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: $mobile-spacing-lg;
+
+      @include tablet-up {
+        grid-template-columns: repeat(2, 1fr);
+        gap: $spacing-xl;
+      }
+
+      .team-member {
+        background: $background-white;
+        border-radius: $border-radius-lg;
+        padding: $mobile-spacing-lg;
+        box-shadow: $shadow-sm;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        transition: all $transition-normal;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+
+        @include tablet-up {
+          padding: $spacing-xl;
+        }
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 4px;
+          background: $gradient-primary;
+          transform: scaleX(0);
+          transition: transform $transition-normal;
+        }
 
         &:hover {
-          color: $primary-color;
+          transform: translateY(-4px);
+          box-shadow: $shadow-lg;
+          border-color: rgba($primary-color, 0.2);
+
+          &::before {
+            transform: scaleX(1);
+          }
+
+          .member-avatar {
+            transform: scale(1.05);
+          }
         }
 
-        svg {
-          width: 1.5rem;
-          height: 1.5rem;
+        .member-avatar {
+          width: 120px;
+          height: 120px;
+          border-radius: $border-radius-full;
+          margin: 0 auto $mobile-spacing-md;
+          background: $gradient-primary;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-size: 48px;
+          font-weight: 700;
+          transition: transform $transition-normal;
+          border: 4px solid white;
+          box-shadow: $shadow-md;
+
+          @include tablet-up {
+            width: 150px;
+            height: 150px;
+            margin-bottom: $spacing-lg;
+            font-size: 60px;
+          }
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: $border-radius-full;
+          }
+        }
+
+        .member-info {
+          h3 {
+            font-size: $mobile-font-size-xl;
+            font-weight: 700;
+            color: $text-primary;
+            margin-bottom: $mobile-spacing-xs;
+
+            @include tablet-up {
+              font-size: $font-size-2xl;
+              margin-bottom: $spacing-xs;
+            }
+          }
+
+          .role {
+            font-size: $mobile-font-size-base;
+            color: $primary-color;
+            font-weight: 600;
+            margin-bottom: $mobile-spacing-md;
+
+            @include tablet-up {
+              font-size: $font-size-lg;
+              margin-bottom: $spacing-lg;
+            }
+          }
+
+          .bio {
+            font-size: $mobile-font-size-sm;
+            color: $text-secondary;
+            line-height: 1.6;
+            margin-bottom: $mobile-spacing-lg;
+
+            @include tablet-up {
+              font-size: $font-size-base;
+              margin-bottom: $spacing-xl;
+            }
+          }
+
+          .skills {
+            margin-bottom: $mobile-spacing-lg;
+
+            @include tablet-up {
+              margin-bottom: $spacing-xl;
+            }
+
+            .skills-title {
+              font-size: $mobile-font-size-base;
+              font-weight: 600;
+              color: $text-primary;
+              margin-bottom: $mobile-spacing-sm;
+
+              @include tablet-up {
+                font-size: $font-size-lg;
+                margin-bottom: $spacing-sm;
+              }
+            }
+
+            .skills-list {
+              display: flex;
+              flex-wrap: wrap;
+              gap: $mobile-spacing-xs;
+              justify-content: center;
+
+              @include tablet-up {
+                gap: $spacing-xs;
+              }
+
+              .skill-tag {
+                background: rgba($primary-color, 0.1);
+                color: $primary-color;
+                padding: $mobile-spacing-xs $mobile-spacing-sm;
+                border-radius: $border-radius-full;
+                font-size: $mobile-font-size-xs;
+                font-weight: 500;
+
+                @include tablet-up {
+                  font-size: $font-size-sm;
+                  padding: $spacing-xs $spacing-sm;
+                }
+              }
+            }
+          }
+
+          .social-links {
+            display: flex;
+            justify-content: center;
+            gap: $mobile-spacing-md;
+
+            @include tablet-up {
+              gap: $spacing-lg;
+            }
+
+            .social-link {
+              width: 44px;
+              height: 44px;
+              background: rgba($primary-color, 0.1);
+              border-radius: $border-radius-full;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: $primary-color;
+              text-decoration: none;
+              font-size: 20px;
+              transition: all $transition-normal;
+
+              @include tablet-up {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+              }
+
+              &:hover {
+                background: $primary-color;
+                color: white;
+                transform: translateY(-2px);
+                box-shadow: $shadow-md;
+              }
+
+              &:active {
+                transform: translateY(0);
+              }
+
+              // Platform-specific colors
+              &.linkedin {
+                &:hover {
+                  background: #0077b5;
+                }
+              }
+
+              &.github {
+                &:hover {
+                  background: #333;
+                }
+              }
+
+              &.twitter {
+                &:hover {
+                  background: #1da1f2;
+                }
+              }
+
+              &.instagram {
+                &:hover {
+                  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+                }
+              }
+
+              &.email {
+                &:hover {
+                  background: $secondary-color;
+                }
+              }
+            }
+          }
         }
       }
     }
   }
 
-  .mission-section {
-    text-align: center;
-    max-width: 64rem;
-    margin: 0 auto;
-    padding: $spacing-xl 0;
+  // Company Values Section
+  .values-section {
+    background: $background-white;
+    border-radius: $border-radius-lg;
+    padding: $mobile-spacing-xl;
+    box-shadow: $shadow-sm;
+    margin-bottom: $mobile-spacing-xl;
 
-    h2 {
-      font-size: 2rem;
+    @include tablet-up {
+      padding: $spacing-xl;
+      margin-bottom: $spacing-xl;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: $mobile-font-size-2xl;
       font-weight: 700;
       color: $text-primary;
-      margin-bottom: $spacing-md;
+      margin-bottom: $mobile-spacing-lg;
+
+      @include tablet-up {
+        font-size: $font-size-3xl;
+        margin-bottom: $spacing-xl;
+      }
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: $mobile-spacing-lg;
+
+      @include tablet-up {
+        grid-template-columns: repeat(2, 1fr);
+        gap: $spacing-lg;
+      }
+
+      @include desktop-up {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .value-item {
+        text-align: center;
+        padding: $mobile-spacing-lg;
+
+        @include tablet-up {
+          padding: $spacing-lg;
+        }
+
+        .value-icon {
+          width: 60px;
+          height: 60px;
+          background: $gradient-primary;
+          border-radius: $border-radius-lg;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto $mobile-spacing-md;
+          color: white;
+          font-size: 28px;
+
+          @include tablet-up {
+            width: 70px;
+            height: 70px;
+            margin-bottom: $spacing-md;
+            font-size: 32px;
+          }
+        }
+
+        h4 {
+          font-size: $mobile-font-size-lg;
+          font-weight: 600;
+          color: $text-primary;
+          margin-bottom: $mobile-spacing-sm;
+
+          @include tablet-up {
+            font-size: $font-size-xl;
+            margin-bottom: $spacing-sm;
+          }
+        }
+
+        p {
+          font-size: $mobile-font-size-sm;
+          color: $text-secondary;
+          line-height: 1.6;
+
+          @include tablet-up {
+            font-size: $font-size-base;
+          }
+        }
+      }
+    }
+  }
+
+  // CTA Section
+  .about-cta {
+    background: $gradient-primary;
+    border-radius: $border-radius-lg;
+    padding: $mobile-spacing-xl;
+    text-align: center;
+    color: white;
+
+    @include tablet-up {
+      padding: $spacing-xl;
+    }
+
+    h2 {
+      font-size: $mobile-font-size-2xl;
+      font-weight: 700;
+      margin-bottom: $mobile-spacing-md;
+
+      @include tablet-up {
+        font-size: $font-size-3xl;
+        margin-bottom: $spacing-lg;
+      }
     }
 
     p {
-      font-size: 1.25rem;
-      color: $text-secondary;
-      line-height: 1.7;
+      font-size: $mobile-font-size-base;
+      margin-bottom: $mobile-spacing-lg;
+      opacity: 0.9;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+
+      @include tablet-up {
+        font-size: $font-size-lg;
+        margin-bottom: $spacing-xl;
+      }
+    }
+
+    .cta-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: $mobile-spacing-md;
+      align-items: center;
+
+      @include tablet-up {
+        flex-direction: row;
+        justify-content: center;
+        gap: $spacing-lg;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: $mobile-spacing-md $mobile-spacing-lg;
+        border-radius: $border-radius-lg;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: $mobile-font-size-base;
+        transition: all $transition-normal;
+        min-width: 160px;
+        text-align: center;
+
+        @include tablet-up {
+          padding: $spacing-md $spacing-xl;
+          font-size: $font-size-lg;
+          min-width: 180px;
+        }
+
+        &.btn-primary {
+          background: white;
+          color: $primary-color;
+          box-shadow: $shadow-md;
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: $shadow-lg;
+          }
+        }
+
+        &.btn-secondary {
+          background: transparent;
+          color: white;
+          border: 2px solid white;
+
+          &:hover {
+            background: white;
+            color: $primary-color;
+          }
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+      }
+    }
+  }
+}
+
+// Touch device optimizations
+@media (hover: none) and (pointer: coarse) {
+  .about {
+    .team-member {
+      &:hover {
+        transform: none;
+        box-shadow: $shadow-sm;
+        border-color: rgba(0, 0, 0, 0.05);
+
+        &::before {
+          transform: scaleX(0);
+        }
+
+        .member-avatar {
+          transform: none;
+        }
+      }
+
+      &:active {
+        transform: translateY(-2px);
+        box-shadow: $shadow-md;
+        border-color: rgba($primary-color, 0.2);
+
+        &::before {
+          transform: scaleX(1);
+        }
+      }
+    }
+
+    .social-link,
+    .btn {
+      &:hover {
+        transform: none;
+        box-shadow: $shadow-sm;
+        background: rgba($primary-color, 0.1);
+        color: $primary-color;
+      }
+
+      &:active {
+        transform: translateY(-2px);
+        box-shadow: $shadow-md;
+      }
     }
   }
 } 

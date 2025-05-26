@@ -1,12 +1,164 @@
 @use './pages/css/variables.scss' as *;
 
+// Global reset and base styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+
+  @include mobile-only {
+    font-size: 14px;
+  }
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+  color: $text-primary;
+  background-color: $background-white;
+  overflow-x: hidden;
+}
+
+// App layout
 .app {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: $background-light;
+}
 
-  .main-content {
-    flex: 1;
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+// Typography
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  color: $text-primary;
+  margin-bottom: 0;
+}
+
+p {
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+a {
+  color: $primary-color;
+  text-decoration: none;
+  transition: color $transition-normal;
+
+  &:hover {
+    color: $primary-dark;
+  }
+}
+
+// Button styles
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all $transition-normal;
+
+  &:focus-visible {
+    outline: 2px solid $primary-color;
+    outline-offset: 2px;
+  }
+}
+
+// Form elements
+input, textarea, select {
+  font-family: inherit;
+  
+  &:focus {
+    outline: none;
+  }
+}
+
+// Images
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+// Utility classes
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 $mobile-spacing-md;
+
+  @include tablet-up {
+    padding: 0 $spacing-lg;
+  }
+}
+
+// Responsive utilities
+.mobile-only {
+  @include tablet-up {
+    display: none !important;
+  }
+}
+
+.tablet-up {
+  @include mobile-only {
+    display: none !important;
+  }
+}
+
+// Smooth scrolling for anchor links
+html {
+  scroll-behavior: smooth;
+}
+
+// Focus styles for accessibility
+*:focus-visible {
+  outline: 2px solid $primary-color;
+  outline-offset: 2px;
+}
+
+// Disable animations for users who prefer reduced motion
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .app {
+    filter: contrast(1.2);
   }
 } 

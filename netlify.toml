@@ -1,0 +1,27 @@
+[build]
+  # Build command
+  command = "npm run build"
+  
+  # Directory to publish (build output)
+  publish = "dist"
+
+[[redirects]]
+  # Handle client-side routing - redirect all routes to index.html
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  # Apply security headers to all pages
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  # Cache static assets
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable" 

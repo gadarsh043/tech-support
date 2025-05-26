@@ -1,123 +1,273 @@
 @use '../../pages/css/variables.scss' as *;
 
 .navbar {
-  background: $background-white;
-  box-shadow: $shadow-lg;
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 50;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  z-index: $z-fixed;
+  transition: all $transition-normal;
+
+  &.scrolled {
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: $shadow-md;
+  }
 
   .container {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: 0 $mobile-spacing-md;
 
-    .nav-content {
+    @include tablet-up {
+      padding: 0 $spacing-lg;
+    }
+  }
+
+  .nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+
+    @include tablet-up {
+      height: 70px;
+    }
+  }
+
+  .logo {
+    text-decoration: none;
+    font-size: $mobile-font-size-xl;
+    font-weight: 700;
+    color: $primary-color;
+    transition: all $transition-normal;
+
+    @include tablet-up {
+      font-size: $font-size-2xl;
+    }
+
+    .logo-text {
+      display: inline-block;
+      transition: transform $transition-normal;
+    }
+
+    &:hover .logo-text {
+      transform: scale(1.05);
+    }
+  }
+
+  // Desktop Menu
+  .desktop-menu {
+    display: none;
+
+    @include tablet-up {
       display: flex;
-      justify-content: space-between;
-      height: 4rem;
-      align-items: center;
+      gap: $spacing-lg;
+    }
 
-      .logo {
-        font-size: 1.5rem;
-        font-weight: 700;
+    .nav-link {
+      text-decoration: none;
+      color: $text-secondary;
+      font-weight: 500;
+      font-size: $font-size-base;
+      padding: $spacing-xs $spacing-sm;
+      border-radius: $border-radius-md;
+      transition: all $transition-normal;
+      position: relative;
+
+      &:hover {
         color: $primary-color;
-        text-decoration: none;
-        transition: color $transition-fast;
-
-        &:hover {
-          color: $primary-dark;
-        }
+        background: rgba($primary-color, 0.1);
       }
 
-      .desktop-menu {
-        display: none;
-        align-items: center;
-        gap: $spacing-lg;
+      &.active {
+        color: $primary-color;
+        font-weight: 600;
 
-        @media (min-width: $breakpoint-md) {
-          display: flex;
-        }
-
-        .nav-link {
-          color: $text-primary;
-          padding: $spacing-xs $spacing-sm;
-          border-radius: $border-radius-md;
-          text-decoration: none;
-          font-weight: 500;
-          transition: all $transition-fast;
-
-          &:hover {
-            color: $primary-color;
-            background: rgba($primary-color, 0.1);
-          }
-        }
-
-        .hire-button {
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 20px;
+          height: 2px;
           background: $primary-color;
-          color: $background-white;
-          padding: $spacing-xs $spacing-md;
-          border-radius: $border-radius-md;
-          font-weight: 500;
-          text-decoration: none;
-          transition: all $transition-fast;
-
-          &:hover {
-            background: $primary-dark;
-            transform: translateY(-1px);
-          }
-        }
-      }
-
-      .mobile-menu-button {
-        display: block;
-        color: $text-primary;
-        padding: $spacing-xs;
-        cursor: pointer;
-
-        @media (min-width: $breakpoint-md) {
-          display: none;
-        }
-
-        svg {
-          width: 1.5rem;
-          height: 1.5rem;
+          border-radius: $border-radius-full;
         }
       }
     }
+  }
 
-    .mobile-menu {
-      padding: $spacing-sm 0;
+  // Mobile Menu Button
+  .mobile-menu-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: none;
+    color: $text-primary;
+    font-size: 24px;
+    cursor: pointer;
+    border-radius: $border-radius-md;
+    transition: all $transition-normal;
+    -webkit-tap-highlight-color: transparent;
+    z-index: $z-fixed + 1;
+    position: relative;
 
-      .nav-link {
-        display: block;
-        color: $text-primary;
-        padding: $spacing-sm;
-        text-decoration: none;
-        font-weight: 500;
-        transition: all $transition-fast;
+    @include tablet-up {
+      display: none;
+    }
 
-        &:hover {
-          color: $primary-color;
-          background: rgba($primary-color, 0.1);
-        }
+    @include mobile-only {
+      display: flex !important;
+    }
+
+    &:hover {
+      background: rgba($primary-color, 0.1);
+      color: $primary-color;
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    &.open {
+      color: $primary-color;
+      z-index: $z-modal + 1;
+    }
+  }
+
+  // Mobile Menu Overlay
+  .mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all $transition-normal;
+    z-index: $z-modal;
+    pointer-events: none;
+
+    @include tablet-up {
+      display: none;
+    }
+
+    &.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+  }
+
+  // Mobile Menu
+  .mobile-menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 280px;
+    height: 100vh;
+    background: $background-white;
+    box-shadow: $shadow-lg;
+    transform: translateX(100%);
+    transition: transform $transition-normal;
+    overflow-y: auto;
+    z-index: $z-modal + 1;
+
+    .mobile-menu-header {
+      padding: $mobile-spacing-lg;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      background: $gradient-primary;
+
+      .mobile-logo {
+        color: white;
+        font-size: $mobile-font-size-2xl;
+        font-weight: 700;
+      }
+    }
+
+    .mobile-nav-items {
+      padding: $mobile-spacing-lg 0;
+    }
+
+    .mobile-nav-link {
+      display: block;
+      text-decoration: none;
+      color: $text-secondary;
+      font-weight: 500;
+      font-size: $mobile-font-size-lg;
+      padding: $mobile-spacing-md $mobile-spacing-lg;
+      transition: all $transition-normal;
+      border-left: 3px solid transparent;
+      opacity: 0;
+      transform: translateX(20px);
+      animation: slideInRight 0.3s ease-out forwards;
+
+      &:hover {
+        color: $primary-color;
+        background: rgba($primary-color, 0.05);
+        border-left-color: $primary-color;
       }
 
-      .hire-button {
-        display: block;
-        background: $primary-color;
-        color: $background-white;
-        padding: $spacing-sm;
-        text-align: center;
-        border-radius: $border-radius-md;
-        font-weight: 500;
-        text-decoration: none;
-        margin: $spacing-xs $spacing-sm;
-        transition: all $transition-fast;
+      &.active {
+        color: $primary-color;
+        background: rgba($primary-color, 0.1);
+        border-left-color: $primary-color;
+        font-weight: 600;
+      }
 
-        &:hover {
-          background: $primary-dark;
-        }
+      &:active {
+        background: rgba($primary-color, 0.15);
+      }
+    }
+  }
+
+  // When overlay is open, slide in the mobile menu
+  .mobile-menu-overlay.open .mobile-menu {
+    transform: translateX(0);
+  }
+}
+
+// Mobile menu animations
+@keyframes slideInRight {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Touch improvements
+@media (hover: none) and (pointer: coarse) {
+  .navbar {
+    .mobile-menu-button {
+      &:hover {
+        background: none;
+        color: $text-primary;
+      }
+
+      &:active {
+        background: rgba($primary-color, 0.1);
+        color: $primary-color;
+      }
+    }
+
+    .mobile-nav-link {
+      &:hover {
+        color: $text-secondary;
+        background: none;
+        border-left-color: transparent;
+      }
+
+      &:active {
+        color: $primary-color;
+        background: rgba($primary-color, 0.1);
+        border-left-color: $primary-color;
       }
     }
   }
