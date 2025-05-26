@@ -1,0 +1,12 @@
+@use './pages/css/variables.scss' as *;
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: $background-light;
+
+  .main-content {
+    flex: 1;
+  }
+} 

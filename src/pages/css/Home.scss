@@ -1,0 +1,109 @@
+@use './variables.scss' as *;
+
+.home-page {
+  .hero-section {
+    background: $primary-color;
+    padding: $spacing-xl 1rem;
+    color: $background-white;
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      text-align: center;
+
+      h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: $spacing-md;
+        
+        @media (min-width: $breakpoint-md) {
+          font-size: 4rem;
+        }
+      }
+
+      p {
+        font-size: 1.25rem;
+        margin-bottom: $spacing-lg;
+        opacity: 0.9;
+        
+        @media (min-width: $breakpoint-md) {
+          font-size: 1.5rem;
+        }
+      }
+
+      .cta-button {
+        display: inline-block;
+        background: $background-white;
+        color: $primary-color;
+        padding: $spacing-sm $spacing-lg;
+        border-radius: $border-radius-full;
+        font-size: 1.125rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all $transition-fast;
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: $shadow-md;
+          background: $background-light;
+        }
+      }
+    }
+  }
+
+  .features-section {
+    padding: $spacing-xl 1rem;
+    background: $background-white;
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+
+      .section-header {
+        text-align: center;
+        margin-bottom: $spacing-xl;
+
+        h2 {
+          font-size: 2rem;
+          font-weight: 700;
+          color: $text-primary;
+          margin-bottom: $spacing-sm;
+        }
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: $spacing-lg;
+        
+        @media (min-width: $breakpoint-md) {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .feature-card {
+          background: $background-white;
+          padding: $spacing-lg;
+          border-radius: $border-radius-lg;
+          box-shadow: $shadow-lg;
+          transition: transform $transition-normal;
+
+          &:hover {
+            transform: translateY(-4px);
+          }
+
+          h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: $text-primary;
+            margin-bottom: $spacing-sm;
+          }
+
+          p {
+            color: $text-secondary;
+            line-height: 1.6;
+          }
+        }
+      }
+    }
+  }
+} 

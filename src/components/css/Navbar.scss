@@ -1,0 +1,124 @@
+@use '../../pages/css/variables.scss' as *;
+
+.navbar {
+  background: $background-white;
+  box-shadow: $shadow-lg;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+
+    .nav-content {
+      display: flex;
+      justify-content: space-between;
+      height: 4rem;
+      align-items: center;
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: $primary-color;
+        text-decoration: none;
+        transition: color $transition-fast;
+
+        &:hover {
+          color: $primary-dark;
+        }
+      }
+
+      .desktop-menu {
+        display: none;
+        align-items: center;
+        gap: $spacing-lg;
+
+        @media (min-width: $breakpoint-md) {
+          display: flex;
+        }
+
+        .nav-link {
+          color: $text-primary;
+          padding: $spacing-xs $spacing-sm;
+          border-radius: $border-radius-md;
+          text-decoration: none;
+          font-weight: 500;
+          transition: all $transition-fast;
+
+          &:hover {
+            color: $primary-color;
+            background: rgba($primary-color, 0.1);
+          }
+        }
+
+        .hire-button {
+          background: $primary-color;
+          color: $background-white;
+          padding: $spacing-xs $spacing-md;
+          border-radius: $border-radius-md;
+          font-weight: 500;
+          text-decoration: none;
+          transition: all $transition-fast;
+
+          &:hover {
+            background: $primary-dark;
+            transform: translateY(-1px);
+          }
+        }
+      }
+
+      .mobile-menu-button {
+        display: block;
+        color: $text-primary;
+        padding: $spacing-xs;
+        cursor: pointer;
+
+        @media (min-width: $breakpoint-md) {
+          display: none;
+        }
+
+        svg {
+          width: 1.5rem;
+          height: 1.5rem;
+        }
+      }
+    }
+
+    .mobile-menu {
+      padding: $spacing-sm 0;
+
+      .nav-link {
+        display: block;
+        color: $text-primary;
+        padding: $spacing-sm;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all $transition-fast;
+
+        &:hover {
+          color: $primary-color;
+          background: rgba($primary-color, 0.1);
+        }
+      }
+
+      .hire-button {
+        display: block;
+        background: $primary-color;
+        color: $background-white;
+        padding: $spacing-sm;
+        text-align: center;
+        border-radius: $border-radius-md;
+        font-weight: 500;
+        text-decoration: none;
+        margin: $spacing-xs $spacing-sm;
+        transition: all $transition-fast;
+
+        &:hover {
+          background: $primary-dark;
+        }
+      }
+    }
+  }
+} 
