@@ -33,10 +33,10 @@ const About = () => {
     },
     {
       name: 'Shobhit',
-      role: 'Marketing & Social Media Expert',
-      description: 'Specialized in digital marketing strategies and social media management. Expert at building brand presence, creating engaging content, and driving online growth for businesses.',
+      role: 'Business Development & Marketing Specialist',
+      description: 'Expert in driving business growth through strategic marketing and development initiatives. Skilled in crafting impactful marketing campaigns, fostering partnerships, and expanding brand reach to achieve business objectives.',
       image: shobhit,
-      skills: ['Digital Marketing', 'Social Media Strategy', 'Content Creation', 'SEO', 'Brand Management'],
+      skills: ['Business Development', 'Strategic Marketing', 'Partnership Building', 'Market Research', 'Brand Strategy'],
       social: {
         linkedin: 'https://www.linkedin.com/in/shobhit-gupta-b9294975/',
         instagram: 'https://www.instagram.com/shobhit_310/',
