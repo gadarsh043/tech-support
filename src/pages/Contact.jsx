@@ -15,6 +15,8 @@ const Contact = () => {
   const form = useRef();
   const [status, setStatus] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [validationErrors, setValidationErrors] = useState({});
+  const [hasSubmitted, setHasSubmitted] = useState(false);
 
   const contactInfo = [
     {
@@ -59,8 +61,55 @@ const Contact = () => {
     }
   ];
 
+  // Validate form fields
+  const validateForm = (formData) => {
+    const errors = {};
+    
+    if (!formData.get('name')?.trim()) {
+      errors.name = 'Full name is required';
+    }
+    
+    if (!formData.get('email')?.trim()) {
+      errors.email = 'Email address is required';
+    } else if (!/\S+@\S+\.\S+/.test(formData.get('email'))) {
+      errors.email = 'Please enter a valid email address';
+    }
+    
+    if (!formData.get('phone')?.trim()) {
+      errors.phone = 'Phone number is required';
+    }
+    
+    if (!formData.get('message')?.trim()) {
+      errors.message = 'Message is required';
+    }
+    
+    return errors;
+  };
+
+  // Clear validation error for a specific field
+  const clearFieldError = (fieldName) => {
+    if (validationErrors[fieldName]) {
+      setValidationErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[fieldName];
+        return newErrors;
+      });
+    }
+  };
+
   const sendEmail = async (e) => {
     e.preventDefault();
+    setHasSubmitted(true);
+    
+    const formData = new FormData(form.current);
+    const errors = validateForm(formData);
+    
+    if (Object.keys(errors).length > 0) {
+      setValidationErrors(errors);
+      return;
+    }
+    
+    setValidationErrors({});
     setIsSubmitting(true);
     setStatus('sending');
 
@@ -73,6 +122,7 @@ const Contact = () => {
       );
       setStatus('success');
       form.current.reset();
+      setHasSubmitted(false);
     } catch (error) {
       console.error('EmailJS Error:', error);
       setStatus('error');
@@ -158,7 +208,12 @@ const Contact = () => {
                   name="name"
                   required
                   placeholder="Enter your full name"
+                  className={hasSubmitted && validationErrors.name ? 'error' : ''}
+                  onChange={() => clearFieldError('name')}
                 />
+                {hasSubmitted && validationErrors.name && (
+                  <div className="error-message show">{validationErrors.name}</div>
+                )}
               </div>
               
               <div className="form-group">
@@ -171,7 +226,12 @@ const Contact = () => {
                   name="email"
                   required
                   placeholder="Enter your email address"
+                  className={hasSubmitted && validationErrors.email ? 'error' : ''}
+                  onChange={() => clearFieldError('email')}
                 />
+                {hasSubmitted && validationErrors.email && (
+                  <div className="error-message show">{validationErrors.email}</div>
+                )}
               </div>
               
               <div className="form-group">
@@ -184,7 +244,12 @@ const Contact = () => {
                   name="phone"
                   required
                   placeholder="+91 (123) 456-7890"
+                  className={hasSubmitted && validationErrors.phone ? 'error' : ''}
+                  onChange={() => clearFieldError('phone')}
                 />
+                {hasSubmitted && validationErrors.phone && (
+                  <div className="error-message show">{validationErrors.phone}</div>
+                )}
               </div>
               
               <div className="form-group">
@@ -197,7 +262,12 @@ const Contact = () => {
                   required
                   placeholder="Tell us about your project or how we can help you..."
                   rows={5}
+                  className={hasSubmitted && validationErrors.message ? 'error' : ''}
+                  onChange={() => clearFieldError('message')}
                 />
+                {hasSubmitted && validationErrors.message && (
+                  <div className="error-message show">{validationErrors.message}</div>
+                )}
               </div>
               
               <button type="submit" className="submit-button" disabled={isSubmitting}>

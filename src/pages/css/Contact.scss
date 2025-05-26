@@ -285,8 +285,15 @@
             }
           }
 
-          &:invalid {
+          // Error state styling - only when error class is applied
+          &.error {
             border-color: $secondary-color;
+            box-shadow: 0 0 0 3px rgba($secondary-color, 0.1);
+            
+            &:focus {
+              border-color: $secondary-color;
+              box-shadow: 0 0 0 3px rgba($secondary-color, 0.2);
+            }
           }
         }
 
@@ -304,14 +311,17 @@
           font-size: $mobile-font-size-sm;
           margin-top: $mobile-spacing-xs;
           display: none;
+          font-weight: 500;
+          line-height: 1.4;
 
           @include tablet-up {
-            font-size: $font-size-base;
+            font-size: $font-size-sm;
             margin-top: $spacing-xs;
           }
 
           &.show {
             display: block;
+            animation: slideInError 0.3s ease-out;
           }
         }
       }
@@ -488,6 +498,17 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+@keyframes slideInError {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 // Touch device optimizations
